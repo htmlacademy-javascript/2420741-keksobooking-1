@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Сапармурад Сапармурадов](https://up.htmlacademy.ru/javascript-individual/1/user/2420741).
-* Наставник: `Неизвестно`.
+* Наставник: [Артур Галимов](https://htmlacademy.ru/profile/id1237543).
 
 ---
 
