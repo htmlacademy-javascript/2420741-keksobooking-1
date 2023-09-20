@@ -1,6 +1,6 @@
 // Проверка на палиндромом
 
-console.log(palindrom('Лёша на полке клопаф нашёл'));
+// console.log(palindrom('Лёша на полке клопаф нашёл'));
 
 function palindrom(phrase) {
   let phraseLow = phrase.toLowerCase(); // перевести все в нижний регистр
@@ -15,12 +15,9 @@ function palindrom(phrase) {
 }
 
 
-
-
-
 // Извлечение цифры
 
-console.log(extractDigit('1.5i04'));
+// console.log(extractDigit('1.5i04'));
 
 function extractDigit(string) {
   let intoString = String(string); // преобразовать в строку
@@ -34,23 +31,24 @@ function extractDigit(string) {
 }
 
 
-
-
 // Добавочный символ
 
-console.log(symb('1', 5, 'q'));
+// console.log(symb('11', 4, 'qq'));
 
-function symb(start, length, last) {
+function symb(stStr, length, lasStr) {
+  let finStr = ''; // обявить переменную
+    if(stStr.length >= length){ // проверить длину строки
+  return symb = stStr;
+  }
+    if(lasStr.length >= length || lasStr.length <= length){
+    finStr = lasStr + stStr;
+  return symb(finStr, length, lasStr);
+};
 }
-
-
-
-
-
 
 // Кексобукинг рандом
 
-console.log(math(1, 4, 6))
+// console.log(math(1, 4, 6))
 
 function math(min, max, num) {
   const random = Math.random() * (max - min) + min // находим число в диапазоне
