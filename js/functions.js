@@ -1,24 +1,24 @@
-// Проверка на палиндромом
 
-// console.log(palindrom('Лёша на полке клопаф нашёл'));
+// Проверка на палиндромом #1.0
 
-function palindrom(phrase) {
+
+function isPalindrom(phrase) {
   const phraseLow = phrase.toLowerCase(); // перевести все в нижний регистр
   const phrLowNoSpace = phraseLow.replaceAll(' ', ''); // убрать пробелы
-  const lastIndex = phrLowNoSpace.length - 1; // получить последний индекс строки
-  for (let i = 0; i < phrLowNoSpace.length / 2; i++) { // проверить циклом
-    if(phrLowNoSpace[i] !== phrLowNoSpace[lastIndex - i]) { // проверить равен зеркальный индекс
-      return false; // если не равен вернуть false
+  let reversePhrase = '';
+  for (let i = phrLowNoSpace.length - 1; i >= 0; i--) {
+    reversePhrase += phrLowNoSpace.at(i); // получим перевернутое слово или фразу без пробелов
+    if (reversePhrase === phrLowNoSpace) {
+      return true;
     }
-    return true; // если совпадает вернуть true
-  }
+  } return false;
 }
-palindrom ('');
+
+isPalindrom('довод');
 
 
-// Извлечение цифры
+// Извлечение цифры #1.0
 
-// console.log(extractDigit('1.5i04'));
 
 function extractDigit(string) {
   const intoString = String(string); // преобразовать в строку
@@ -30,32 +30,26 @@ function extractDigit(string) {
   }
   return Number(str); // вернуть Number, чтобы отсечь первый ноль
 }
-extractDigit ();
+extractDigit (2023);
 
 
 // Добавочный символ
 
-// console.log(symb('11', 4, 'qq'));
-
-
-/* function symb(stStr, length, lasStr) {
-  let finStr = ''; // обявить переменную
-  if(stStr.length >= length) {
-    return stStr;
-  } // проверить длину строки
-  if(lasStr.length >= length || lasStr.length <= length){
-    finStr = lasStr + stStr;
-    return symb(finStr, length, lasStr);
+const myPadStart = (string, minLength, pad) => {
+  const actualPad = minLength - string.length;
+  if (actualPad <= 0) {
+    return string;
   }
-} symb(); */
+  return pad.slice(0, actualPad % pad.length) + pad.repeat(actualPad / pad.length) + string;
+};
+
+myPadStart('1', 4, '0');
 
 
 // Кексобукинг рандом
 
-// console.log(math(1, 4, 6))
-
 function math(min, max, num) {
-  const random = Math.random() * (max - min) + min; // находим число в диапазоне
+  const random = Math.random() * (max - min + 1) + min; // находим число в диапазоне
   return random.toFixed(num); // выводим нужное число знаком после запятой
 }
-math();
+math(1, 4, 6);
