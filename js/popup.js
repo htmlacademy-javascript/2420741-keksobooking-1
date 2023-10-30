@@ -18,7 +18,7 @@ const offerCardTemplate = document.querySelector('#card').content.querySelector(
 // создали карточку с данными
 const offerCards = variableOffers(1);
 
-// создали блок для списка удобств
+// создали функцию для списка удобств
 const actualFeatures = (features) => {
   const variableFeauters = document.createDocumentFragment();
   features.forEach((element) => {
@@ -29,7 +29,7 @@ const actualFeatures = (features) => {
   return variableFeauters;
 };
 
-// создали блок для списка фотографий
+// создали функцию для списка фотографий
 const actualPhotos = (photos) => {
   const variablePhotos = document.createDocumentFragment();
   photos.forEach((photo) => {
@@ -55,7 +55,6 @@ offerCards.forEach((offer) => {
   offerCard.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   offerCard.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   offerCard.querySelector('.popup__description').textContent = offer.description;
-  //offerCard.querySelector('.popup__photo').src = offer.photos;
   offerCard.querySelector('.popup__avatar').src = offer.avatar;
 
   const listFeatures = offerCard.querySelector('.popup__features');
