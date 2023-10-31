@@ -1,2 +1,3 @@
-import {variableObjects} from './data.js';
-variableObjects();
+import {variableOffers} from './data.js';
+variableOffers();
+
