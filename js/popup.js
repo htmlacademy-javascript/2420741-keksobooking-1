@@ -46,6 +46,8 @@ const actualPhotos = (photos) => {
 };
 
 
+const userDialogCard = document.createDocumentFragment();
+
 offerCards.forEach((offer) => {
   const offerCard = offerCardTemplate.cloneNode(true);
   offerCard.querySelector('.popup__title').textContent = offer.tittle;
@@ -74,6 +76,9 @@ offerCards.forEach((offer) => {
   } else {
     listPhotos.remove();
   }
-
-  userDialog.appendChild(offerCard);
+  userDialogCard.appendChild(offerCard);
 });
+
+userDialog.appendChild(userDialogCard);
+
+export {userDialog};
