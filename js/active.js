@@ -1,4 +1,4 @@
-import {renderOfferCards} from './popup.js';
+// import {renderOfferCards} from './popup.js';
 
 // находим форму заполнения
 const getForm = document.querySelector('.ad-form');
@@ -30,19 +30,10 @@ const onContentLoad = (evt) => {
   dropAvatar.setAttribute('disabled', true);
 };
 
-// создали функцию для загрузки неактивного состояние страницы - недоступны форма и фильтры
-// function closeForm () {
-//   clearOfferCards();
-//   document.addEventListener('DOMContentLoaded', onContentLoad);
-// }
-//closeForm();
-
 
 // создали функцию для загрузки активного состояния страницы - доступны форма и фильтры
 // eslint-disable-next-line no-unused-vars
 function openForm () {
-  // renderOfferCards();
   document.removeEventListener('DOMContentLoaded', onContentLoad);
 }
-// openForm();
 export{openForm};
