@@ -41,9 +41,8 @@ const onContentLoad = (evt) => {
 // создали функцию для загрузки активного состояния страницы - доступны форма и фильтры
 // eslint-disable-next-line no-unused-vars
 function openForm () {
-  renderOfferCards();
+  // renderOfferCards();
   document.removeEventListener('DOMContentLoaded', onContentLoad);
 }
-openForm();
-
-
+// openForm();
+export{openForm};
