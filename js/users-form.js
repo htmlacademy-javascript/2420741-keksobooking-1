@@ -110,11 +110,9 @@ getForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
-  // eslint-disable-next-line no-console
-    console.log('Можно отправлять');
+    return 'Можно отправлять';
   } else {
-  // eslint-disable-next-line no-console
-    console.log('Форма невалидна');
+    return 'Форма невалидна';
   }
 });
 
