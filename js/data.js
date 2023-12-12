@@ -51,4 +51,4 @@ const OBJECT = () => ({
 const variableOffers = (count) => Array.from({length: count}, OBJECT);
 
 export {variableOffers};
-// address: [getCoordinates(35.65000, 35.70000, 5), getCoordinates(139.70000, 139.80000, 5)],
+

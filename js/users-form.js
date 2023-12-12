@@ -57,7 +57,6 @@ function onPriceCostChange () {
 }
 
 
-
 // добавляем событие на отображение мин.цены в зависимости от выбранного типа жилья
 getForm
   .querySelectorAll('[name="type"]')
