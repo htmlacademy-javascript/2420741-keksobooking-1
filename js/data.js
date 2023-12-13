@@ -18,37 +18,37 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-
-const author = {
-  avatar: AVATAR.replace('{{xx}}',myPadStart(String(getRandom(1,10)), 2, '0'))
-};
 // создали объект
-const offer = {
-  tittle: getRandomArrayElement(TITTLE),
-  address: [getCoordinates(35.65000, 35.70000, 5), getCoordinates(139.70000, 139.80000, 5)],
-  price: getRandom(10000,20000),
-  type: getRandomArrayElement(TYPE),
-  rooms: getRandom(1,20),
-  guests: getRandom(1,10),
-  checkin: getRandomArrayElement(CHECKIN),
-  checkout: getRandomArrayElement(CHECKOUT),
-  features: getNewFeauters(FEAUTERS),
-  description: getRandomArrayElement(DESCRIPTION),
-  photos: getNewFeauters(PHOTOS)
-};
-
-const locations = {
-  lat: getCoordinates(35.65000, 35.70000, 5),
-  lng: getCoordinates(139.70000, 139.80000, 5)
-};
-
-const object = () => Object.assign({}, author, offer, locations);
+const OBJECT = () => ({
+  author: {
+    avatar: AVATAR.replace('{{xx}}',myPadStart(String(getRandom(1,10)), 2, '0'))
+  },
+  offer: {
+    tittle: getRandomArrayElement(TITTLE),
+    address: [getCoordinates(35.65000, 35.70000, 5), getCoordinates(139.70000, 139.80000, 5)],
+    price: getRandom(10000,20000),
+    type: getRandomArrayElement(TYPE),
+    rooms: getRandom(1,20),
+    guests: getRandom(1,10),
+    checkin: getRandomArrayElement(CHECKIN),
+    checkout: getRandomArrayElement(CHECKOUT),
+    features: getNewFeauters(FEAUTERS),
+    description: getRandomArrayElement(DESCRIPTION),
+    photos: getNewFeauters(PHOTOS)
+  },
+  locations:
+    {
+      lat: getCoordinates(35.65000, 35.70000, 5),
+      lng: getCoordinates(139.70000, 139.80000, 5)
+    }
+});
 
 //определились с количеством предложений
 // const QUANTITY_OBJECTS = 1;
 
 
 // создали выбор предложений
-const variableOffers = (count) => Array.from({length: count}, object);
+const variableOffers = (count) => Array.from({length: count}, OBJECT);
 
 export {variableOffers};
+
