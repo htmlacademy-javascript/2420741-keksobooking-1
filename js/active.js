@@ -1,5 +1,3 @@
-// import {renderOfferCards} from './popup.js';
-
 // находим форму заполнения
 const getForm = document.querySelector('.ad-form');
 // находим содержимое формы
@@ -18,22 +16,41 @@ const noActive = (element) => {
   }
 };
 
-
-//создали неактивное состояние событие
-const onContentLoad = (evt) => {
+const onFormLoad = (evt) => {
   evt.preventDefault();
   getForm.classList.add('ad-form--disabled');
-  getMapFiltres.classList.add('map__filters--disabled');
-  noActive(selectFilter);
-  noActive(selectFeature);
   noActive(fieldSets);
   dropAvatar.setAttribute('disabled', true);
 };
 
+const onFiltersLoad = (evt) => {
+  evt.preventDefault();
+  getMapFiltres.classList.add('map__filters--disabled');
+  noActive(selectFilter);
+  noActive(selectFeature);
+};
+
+// создали функцию для загрузки неактивного состояния страницы - доступны форма и фильтры
+function closeForm () {
+  document.addEventListener('DOMContentLoaded', onFormLoad);
+}
+// closeForm();
+
+function closeFilters () {
+  document.addEventListener('DOMContentLoaded', onFiltersLoad);
+}
+// closeFilters();
+
 
 // создали функцию для загрузки активного состояния страницы - доступны форма и фильтры
-// eslint-disable-next-line no-unused-vars
 function openForm () {
-  document.removeEventListener('DOMContentLoaded', onContentLoad);
+  document.removeEventListener('DOMContentLoaded', onFormLoad);
 }
-export{openForm};
+
+function openFilters () {
+  document.removeEventListener('DOMContentLoaded', onFiltersLoad);
+}
+
+export{openForm, openFilters, closeForm, closeFilters};
+
+

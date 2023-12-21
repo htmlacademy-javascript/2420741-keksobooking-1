@@ -26,7 +26,7 @@ const priceCost = getForm.querySelector('#price');
 const typeUnit = getForm.querySelector('[name="type"]');
 
 // сопоставим минимальную цену в зависсимости от типа жилья
-const maxCost = {
+const minCost = {
   bungalow : '0',
   flat: '1000',
   hotel: '3000',
@@ -38,12 +38,12 @@ const maxCost = {
 // добавим соответствии минимальной цены от типа жилья
 function validatePriceCost (value) {
 
-  return value.length && parseInt(value, 10) >= maxCost[typeUnit.value];
+  return value.length && parseInt(value, 10) >= minCost[typeUnit.value];
 }
 
 // добавим сообщение о несоответствии минимальной цены от типа жилья
 function getPriceErrorMessage () {
-  return `минимальная цена за ночь ${maxCost[typeUnit.value]}`;
+  return `минимальная цена за ночь ${minCost[typeUnit.value]}`;
 }
 
 // валидируем
@@ -52,7 +52,7 @@ pristine.addValidator(priceCost, validatePriceCost, getPriceErrorMessage);
 
 //выставляем минимальную цену как подсказку
 function onPriceCostChange () {
-  priceCost.placeholder = maxCost[this.value];
+  priceCost.placeholder = minCost[this.value];
   pristine.validate(priceCost);
 }
 
@@ -116,6 +116,7 @@ getForm.addEventListener('submit', (evt) => {
   }
 });
 
+
 const sliderElement = document.querySelector('.ad-form__slider');
 
 // создаем слайдер
@@ -124,13 +125,20 @@ noUiSlider.create(sliderElement, {
     min: 0,
     max: 100000,
   },
-  start: 0,
+  start: minCost[typeUnit.value],
   step: 1,
   connect: 'lower',
 });
 
 sliderElement.noUiSlider.on('update', () => {
-  priceCost.value = sliderElement.noUiSlider.get();
+  priceCost.value = Math.ceil(sliderElement.noUiSlider.get());
 });
 
+priceCost.addEventListener('change', () => {
+  sliderElement.noUiSlider.set(priceCost.value);
+});
 
+typeUnit.onchange = function () {
+  priceCost.value = minCost[this.value];
+  sliderElement.noUiSlider.set(priceCost.value);
+};

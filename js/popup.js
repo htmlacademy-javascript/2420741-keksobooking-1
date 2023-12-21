@@ -1,5 +1,3 @@
-import { variableOffers } from './data.js';
-
 
 // сопоставили подписи
 const TYPES_OF_HOUSING = {
@@ -9,14 +7,36 @@ const TYPES_OF_HOUSING = {
   'palace': 'Дворец',
   'hotel': 'Отель'
 };
+//добавим склонение от числа комнат
+const getRoomsText = (roomCount) => {
+  switch (roomCount) {
+    case 1:
+      return 'комната';
+    case 2:
+    case 3:
+    case 4:
+      return 'комнаты';
+    default:
+      return 'комнат';
+  }
+};
+//добавим склонение от числа гостей
+const getGuestsText = (guestCount) => {
+  switch (guestCount) {
+    case 1:
+      return 'гостя';
+    case 2:
+    case 3:
+      return 'гостей';
+    default:
+      return 'не для гостей';
+  }
+};
 
 
 // нашли шаблон карочки
 const offerCardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-// создали карточку с данными
-const offerCards = variableOffers(3);
-export { offerCards };
 
 // создали функцию для списка удобств
 const actualFeatures = (features) => {
@@ -45,17 +65,19 @@ const actualPhotos = (photos) => {
   return variablePhotos;
 };
 
-const renderOfferCards = ({author, locations, offer }) => {
-
+const renderOfferCards = ({
+  author,
+  offer
+}) => {
   const popup = offerCardTemplate.cloneNode(true);
-  popup.querySelector('.popup__title').textContent = offer.tittle;
-  popup.querySelector('.popup__text--address').textContent = `${locations.lat}, ${locations.lng}`;
+  popup.querySelector('.popup__avatar').src = author.avatar || '';
+  popup.querySelector('.popup__title').textContent = offer.title || '';
+  popup.querySelector('.popup__text--address').textContent = offer.address;
   popup.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
   popup.querySelector('.popup__type').textContent = TYPES_OF_HOUSING[offer.type];
-  popup.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
+  popup.querySelector('.popup__text--capacity').textContent = `${offer.rooms} ${getRoomsText(offer.rooms)} для ${offer.guests} ${getGuestsText(offer.guests)}`;
   popup.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
-  popup.querySelector('.popup__description').textContent = offer.description;
-  popup.querySelector('.popup__avatar').src = author.avatar;
+  popup.querySelector('.popup__description').textContent = offer.description || '';
 
   const listFeatures = popup.querySelector('.popup__features');
   listFeatures.innerHTML = '';
