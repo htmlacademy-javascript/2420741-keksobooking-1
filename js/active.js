@@ -4,53 +4,44 @@ const getForm = document.querySelector('.ad-form');
 const fieldSets = getForm.querySelectorAll('.ad-form__element');
 const dropAvatar = getForm.querySelector('#avatar');
 // находим фильтр заполнения
-const getMapFiltres = document.querySelector('.map__filters');
-// находим содержимое филтра
-const selectFilter = getMapFiltres.querySelectorAll('.map__filter');
-const selectFeature = document.querySelector('#housing-features').querySelectorAll('input');
+const mapFilters = document.querySelector('.map__filters');
 
 
-const noActive = (element) => {
-  for (let i = 0; i < element.length; i++) {
-    element[i].setAttribute('disabled', true);
-  }
-};
-
-const onFormLoad = (evt) => {
-  evt.preventDefault();
+const disableForm = () => {
   getForm.classList.add('ad-form--disabled');
-  noActive(fieldSets);
+  for (const elem of fieldSets) {
+    elem.setAttribute('disabled', 'disabled');
+  }
   dropAvatar.setAttribute('disabled', true);
 };
 
-const onFiltersLoad = (evt) => {
-  evt.preventDefault();
-  getMapFiltres.classList.add('map__filters--disabled');
-  noActive(selectFilter);
-  noActive(selectFeature);
+disableForm();
+
+const disableFilters = () => {
+  mapFilters.classList.add('map__filters--disabled');
+  for (const elem of mapFilters) {
+    elem.setAttribute('disabled', 'disabled');
+  }
 };
 
-// создали функцию для загрузки неактивного состояния страницы - доступны форма и фильтры
-function closeForm () {
-  document.addEventListener('DOMContentLoaded', onFormLoad);
-}
-// closeForm();
-
-function closeFilters () {
-  document.addEventListener('DOMContentLoaded', onFiltersLoad);
-}
-// closeFilters();
+const activeForm = () => {
+  getForm.classList.remove('ad-form--disabled');
+  for (const elem of fieldSets) {
+    elem.removeAttribute('disabled', 'disabled');
+  }
+  dropAvatar.removeAttribute('disabled', true);
+};
 
 
-// создали функцию для загрузки активного состояния страницы - доступны форма и фильтры
-function openForm () {
-  document.removeEventListener('DOMContentLoaded', onFormLoad);
-}
+const activeFilters = () => {
+  mapFilters.classList.remove('map__filters--disabled');
+  for (const elem of mapFilters) {
+    elem.removeAttribute('disabled', 'disabled');
+  }
 
-function openFilters () {
-  document.removeEventListener('DOMContentLoaded', onFiltersLoad);
-}
+};
 
-export{openForm, openFilters, closeForm, closeFilters};
+
+export{getForm, disableFilters, activeForm, activeFilters};
 
 

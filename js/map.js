@@ -1,11 +1,12 @@
 import {renderOfferCards} from './popup.js';
 import {onPriceCostChange} from './validate-form.js';
-import {getForm} from './active.js';
+import {getForm, activeForm} from './active.js';
 import {sliderElement, priceCost} from './validate-form.js';
 
 //инициируем карту
 const map = L.map('map-canvas')
   .on('load', () => {
+    activeForm();
   })
   .setView(
     {
@@ -85,6 +86,7 @@ const createMarker = (offer) => {
 };
 
 // // Очистим слой меток объявлений
+// eslint-disable-next-line no-unused-vars
 const clearMarker = () => markerGroup.clearLayers();
 
 // переводим страницу в в дефолтное состояние
@@ -94,8 +96,14 @@ const resetPage = () => {
   getForm.reset();
   ADDRESS.value = `${TOKIO.lat.toFixed(5)}, ${TOKIO.lng.toFixed(5)}`;
   onPriceCostChange();
-  // clearMarker();
   sliderElement.noUiSlider.set(priceCost.value);
 };
+
+const clearButton = document.querySelector('.ad-form__reset');
+
+clearButton.onclick = () => {
+  resetPage();
+};
+
 
 export {createMarker, map, resetPage};

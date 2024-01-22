@@ -27,6 +27,7 @@ pristine.addValidator(
 const priceCost = getForm.querySelector('#price');
 const typeUnit = getForm.querySelector('[name="type"]');
 
+
 // сопоставим минимальную цену в зависсимости от типа жилья
 const minCost = {
   bungalow : '0',
@@ -84,12 +85,15 @@ timeOut.onchange = function () {
 //создадим события для выбора комнат
 const numberRoom = document.querySelector('#room_number');
 const capacityRoom = document.querySelector('#capacity');
+
+
 const roomOption = {
   '1': '1',
   '2': ['1', '2'],
   '3': ['1', '2', '3'],
   '100': '0'
 };
+
 
 function validateRoom () {
   return roomOption[numberRoom.value].includes(capacityRoom.value);
@@ -109,26 +113,36 @@ function capacityRoomErrorMessage () {
 
 pristine.addValidator(capacityRoom, validateRoom, capacityRoomErrorMessage);
 
-getForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    const offerData = new FormData(evt.target);
-    fetch('https://28.javascript.pages.academy/keksobooking',
-      {
-        method: 'POST',
-        body: offerData,
-      })
-      .then(() => {
-        SHOW_SUCCESS('Объявление успешно опубликовано!');
-      })
-      .catch(() => {
-        SHOW_ALERT('Ошибка с сервером, попробуйте отправить форму снова');
-      });
-  }
-});
+const setUserFormSubmit = (onSuccess) => {
+  getForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-// создаем слайдер
+    const isValid = pristine.validate();
+    if (isValid) {
+      const offerData = new FormData(evt.target);
+      fetch('https://28.javascript.pages.academy/keksobooking',
+        {
+          method: 'POST',
+          body: offerData,
+        })
+        .then((response) => {
+          if (response.ok) {
+            onSuccess();
+            SHOW_SUCCESS('Объявление успешно опубликовано!');
+          } else {
+            SHOW_ALERT('Ошибка с сервером, попробуйте отправить форму снова');
+          }
+        })
+        .catch(() => {
+          SHOW_ALERT('Ошибка с сервером, попробуйте отправить форму снова');
+        });
+    }
+  });
+};
+
+export {setUserFormSubmit};
+
+// --------------------------создаем слайдер-----------------------------------
 
 const sliderElement = document.querySelector('.ad-form__slider');
 

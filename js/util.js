@@ -1,4 +1,4 @@
-import { resetPage } from "./map.js";
+import {resetPage} from './map.js';
 // получим рандомное значение для координат
 function getCoordinates(min, max, num) {
   const coordinate = Math.random() * (max - min) + min; // находим число в диапазоне
@@ -50,6 +50,11 @@ const myPadStart = (string, minLength, pad) => {
 
 export{myPadStart};
 
+//--------------------создадим баннеры для (не)успешной отправки формы---------------------------------------
+
+//создадим таймер
+const ALERT_SHOW_TIME = 5000;
+
 // создадим сопоставление с клавишей Esc
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -72,7 +77,7 @@ const SHOW_ALERT = (message) => {
   });
   setTimeout(() => {
     errWindow.remove();
-  }, 100000);
+  }, ALERT_SHOW_TIME);
 };
 
 const SHOW_SUCCESS = (message) => {
@@ -88,7 +93,7 @@ const SHOW_SUCCESS = (message) => {
   setTimeout(() => {
     succWindow.remove();
     resetPage();
-  }, 100000);
+  }, ALERT_SHOW_TIME);
 };
 
 errWindow.addEventListener('click', () => {
@@ -114,3 +119,10 @@ succWindow.addEventListener('click', () => {
 
 export{SHOW_ALERT, SHOW_SUCCESS};
 
+// выведим форму в дефолтное стостояние
+const resetForm = document.querySelector('.ad-form__reset');
+
+resetForm.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetPage();
+});
