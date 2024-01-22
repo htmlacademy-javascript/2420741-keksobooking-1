@@ -1,3 +1,5 @@
+import {SHOW_ALERT, SHOW_SUCCESS} from './util.js';
+
 // находим форму заполнения
 const getForm = document.querySelector('.ad-form');
 
@@ -52,7 +54,8 @@ pristine.addValidator(priceCost, validatePriceCost, getPriceErrorMessage);
 
 //выставляем минимальную цену как подсказку
 function onPriceCostChange () {
-  priceCost.placeholder = minCost[this.value];
+  priceCost.value = minCost[typeUnit.value];
+  // priceCost.placeholder = minCost[typeUnit.value];
   pristine.validate(priceCost);
 }
 
@@ -110,16 +113,25 @@ getForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
-    return 'Можно отправлять';
-  } else {
-    return 'Форма невалидна';
+    const offerData = new FormData(evt.target);
+    fetch('https://28.javascript.pages.academy/keksobooking',
+      {
+        method: 'POST',
+        body: offerData,
+      })
+      .then(() => {
+        SHOW_SUCCESS('Объявление успешно опубликовано!');
+      })
+      .catch(() => {
+        SHOW_ALERT('Ошибка с сервером, попробуйте отправить форму снова');
+      });
   }
 });
 
+// создаем слайдер
 
 const sliderElement = document.querySelector('.ad-form__slider');
 
-// создаем слайдер
 noUiSlider.create(sliderElement, {
   range: {
     min: 0,
@@ -142,3 +154,8 @@ typeUnit.onchange = function () {
   priceCost.value = minCost[this.value];
   sliderElement.noUiSlider.set(priceCost.value);
 };
+
+
+export {onPriceCostChange, sliderElement, priceCost};
+
+

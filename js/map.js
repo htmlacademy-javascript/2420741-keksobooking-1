@@ -1,11 +1,11 @@
-import {openForm} from './active.js';
-import {offerCards} from './popup.js';
 import {renderOfferCards} from './popup.js';
+import {onPriceCostChange} from './validate-form.js';
+import {getForm} from './active.js';
+import {sliderElement, priceCost} from './validate-form.js';
 
 //инициируем карту
 const map = L.map('map-canvas')
   .on('load', () => {
-    openForm();
   })
   .setView(
     {
@@ -38,14 +38,22 @@ const marker = L.marker (
 );
 marker.addTo(map);
 
+//задаем по дефолту координаты Токио
+const TOKIO = {
+  lat: 35.69034,
+  lng: 139.75175,
+};
+
 //находим поле адреса
-const address = document.querySelector('#address');
-address.readOnly = true;
+const ADDRESS = document.querySelector('#address');
+ADDRESS.readOnly = true;
+//назначаем по умолчанию координаты Токио
+ADDRESS.value = `${TOKIO.lat.toFixed(5)}, ${TOKIO.lng.toFixed(5)}`;
 
 //передаем координаты этому полю
 
 marker.on('moveend', (evt) => {
-  address.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
+  ADDRESS.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
 
 //создадим обычную метку
@@ -57,8 +65,8 @@ const icon = L.icon({
 
 const markerGroup = L.layerGroup().addTo(map);
 
-const createMarker = (offerCard) => {
-  const {lat, lng} = offerCard.locations;
+const createMarker = (offer) => {
+  const {lat, lng} = offer.location;
   const markers = L.marker(
     {
       lat,
@@ -70,13 +78,24 @@ const createMarker = (offerCard) => {
   );
   markers
     .addTo(markerGroup)
-    .bindPopup(renderOfferCards(offerCard),
+    .bindPopup(renderOfferCards(offer),
       {
         keepInView: true
       });
 };
 
+// // Очистим слой меток объявлений
+const clearMarker = () => markerGroup.clearLayers();
 
-offerCards.forEach((offerCard) => {
-  createMarker(offerCard);
-});
+// переводим страницу в в дефолтное состояние
+const resetPage = () => {
+  marker.setLatLng(TOKIO);
+  map.setView(TOKIO, 10);
+  getForm.reset();
+  ADDRESS.value = `${TOKIO.lat.toFixed(5)}, ${TOKIO.lng.toFixed(5)}`;
+  onPriceCostChange();
+  // clearMarker();
+  sliderElement.noUiSlider.set(priceCost.value);
+};
+
+export {createMarker, map, resetPage};
