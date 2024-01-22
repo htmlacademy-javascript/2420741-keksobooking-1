@@ -1,5 +1,6 @@
 import {SHOW_ALERT, SHOW_SUCCESS} from './util.js';
 
+
 // находим форму заполнения
 const getForm = document.querySelector('.ad-form');
 
@@ -139,6 +140,7 @@ const setUserFormSubmit = (onSuccess) => {
     }
   });
 };
+
 
 export {setUserFormSubmit};
 
