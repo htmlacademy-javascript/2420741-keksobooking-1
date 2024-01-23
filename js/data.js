@@ -24,7 +24,7 @@ const OBJECT = () => ({
     avatar: AVATAR.replace('{{xx}}',myPadStart(String(getRandom(1,10)), 2, '0'))
   },
   offer: {
-    tittle: getRandomArrayElement(TITTLE),
+    title: getRandomArrayElement(TITTLE),
     address: [getCoordinates(35.65000, 35.70000, 5), getCoordinates(139.70000, 139.80000, 5)],
     price: getRandom(10000,20000),
     type: getRandomArrayElement(TYPE),
@@ -36,7 +36,7 @@ const OBJECT = () => ({
     description: getRandomArrayElement(DESCRIPTION),
     photos: getNewFeauters(PHOTOS)
   },
-  locations:
+  location:
     {
       lat: getCoordinates(35.65000, 35.70000, 5),
       lng: getCoordinates(139.70000, 139.80000, 5)
@@ -51,4 +51,5 @@ const OBJECT = () => ({
 const variableOffers = (count) => Array.from({length: count}, OBJECT);
 
 export {variableOffers};
+
 

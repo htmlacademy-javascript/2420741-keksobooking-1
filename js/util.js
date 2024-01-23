@@ -1,3 +1,4 @@
+import {resetPage} from './map.js';
 // получим рандомное значение для координат
 function getCoordinates(min, max, num) {
   const coordinate = Math.random() * (max - min) + min; // находим число в диапазоне
@@ -48,3 +49,80 @@ const myPadStart = (string, minLength, pad) => {
 };
 
 export{myPadStart};
+
+//--------------------создадим баннеры для (не)успешной отправки формы---------------------------------------
+
+//создадим таймер
+const ALERT_SHOW_TIME = 5000;
+
+// создадим сопоставление с клавишей Esc
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+//создадим окно сообщение об ошибке
+const errMesage = document.querySelector('#error').content.querySelector('.error');
+const succMesage = document.querySelector('#success').content.querySelector('.success');
+const errWindow = errMesage.cloneNode(true);
+const succWindow = succMesage.cloneNode(true);
+const buttonError = errWindow.querySelector('.error__button');
+
+const SHOW_ALERT = (message) => {
+  errWindow.classList.remove('hidden');
+  errWindow.querySelector('.error__message').textContent = message;
+  document.body.append(errWindow);
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      errWindow.remove();
+    }
+  });
+  setTimeout(() => {
+    errWindow.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+const SHOW_SUCCESS = (message) => {
+  succWindow.querySelector('.success__message').textContent = message;
+  document.body.append(succWindow);
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      succWindow.remove();
+      resetPage();
+    }
+  });
+  setTimeout(() => {
+    succWindow.remove();
+    resetPage();
+  }, ALERT_SHOW_TIME);
+};
+
+errWindow.addEventListener('click', () => {
+  errWindow.remove();
+});
+
+buttonError.onclick = () => {
+  errWindow.remove();
+};
+
+document.addEventListener('keydown', (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    errWindow.remove();
+  }
+});
+
+succWindow.addEventListener('click', () => {
+  succWindow.remove();
+  resetPage();
+});
+
+
+export{SHOW_ALERT, SHOW_SUCCESS};
+
+// выведим форму в дефолтное стостояние
+const resetForm = document.querySelector('.ad-form__reset');
+
+resetForm.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetPage();
+});

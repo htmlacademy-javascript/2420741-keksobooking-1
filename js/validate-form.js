@@ -1,3 +1,6 @@
+import {SHOW_ALERT, SHOW_SUCCESS} from './util.js';
+
+
 // находим форму заполнения
 const getForm = document.querySelector('.ad-form');
 
@@ -25,8 +28,9 @@ pristine.addValidator(
 const priceCost = getForm.querySelector('#price');
 const typeUnit = getForm.querySelector('[name="type"]');
 
+
 // сопоставим минимальную цену в зависсимости от типа жилья
-const maxCost = {
+const minCost = {
   bungalow : '0',
   flat: '1000',
   hotel: '3000',
@@ -38,12 +42,12 @@ const maxCost = {
 // добавим соответствии минимальной цены от типа жилья
 function validatePriceCost (value) {
 
-  return value.length && parseInt(value, 10) >= maxCost[typeUnit.value];
+  return value.length && parseInt(value, 10) >= minCost[typeUnit.value];
 }
 
 // добавим сообщение о несоответствии минимальной цены от типа жилья
 function getPriceErrorMessage () {
-  return `минимальная цена за ночь ${maxCost[typeUnit.value]}`;
+  return `минимальная цена за ночь ${minCost[typeUnit.value]}`;
 }
 
 // валидируем
@@ -52,7 +56,8 @@ pristine.addValidator(priceCost, validatePriceCost, getPriceErrorMessage);
 
 //выставляем минимальную цену как подсказку
 function onPriceCostChange () {
-  priceCost.placeholder = maxCost[this.value];
+  priceCost.value = minCost[typeUnit.value];
+  // priceCost.placeholder = minCost[typeUnit.value];
   pristine.validate(priceCost);
 }
 
@@ -81,12 +86,15 @@ timeOut.onchange = function () {
 //создадим события для выбора комнат
 const numberRoom = document.querySelector('#room_number');
 const capacityRoom = document.querySelector('#capacity');
+
+
 const roomOption = {
   '1': '1',
   '2': ['1', '2'],
   '3': ['1', '2', '3'],
   '100': '0'
 };
+
 
 function validateRoom () {
   return roomOption[numberRoom.value].includes(capacityRoom.value);
@@ -106,31 +114,64 @@ function capacityRoomErrorMessage () {
 
 pristine.addValidator(capacityRoom, validateRoom, capacityRoomErrorMessage);
 
-getForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    return 'Можно отправлять';
-  } else {
-    return 'Форма невалидна';
-  }
-});
+const setUserFormSubmit = (onSuccess) => {
+  getForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      const offerData = new FormData(evt.target);
+      fetch('https://28.javascript.pages.academy/keksobooking',
+        {
+          method: 'POST',
+          body: offerData,
+        })
+        .then((response) => {
+          if (response.ok) {
+            onSuccess();
+            SHOW_SUCCESS('Объявление успешно опубликовано!');
+          } else {
+            SHOW_ALERT('Ошибка с сервером, попробуйте отправить форму снова');
+          }
+        })
+        .catch(() => {
+          SHOW_ALERT('Ошибка с сервером, попробуйте отправить форму снова');
+        });
+    }
+  });
+};
+
+
+export {setUserFormSubmit};
+
+// --------------------------создаем слайдер-----------------------------------
 
 const sliderElement = document.querySelector('.ad-form__slider');
 
-// создаем слайдер
 noUiSlider.create(sliderElement, {
   range: {
     min: 0,
     max: 100000,
   },
-  start: 0,
+  start: minCost[typeUnit.value],
   step: 1,
   connect: 'lower',
 });
 
 sliderElement.noUiSlider.on('update', () => {
-  priceCost.value = sliderElement.noUiSlider.get();
+  priceCost.value = Math.ceil(sliderElement.noUiSlider.get());
 });
+
+priceCost.addEventListener('change', () => {
+  sliderElement.noUiSlider.set(priceCost.value);
+});
+
+typeUnit.onchange = function () {
+  priceCost.value = minCost[this.value];
+  sliderElement.noUiSlider.set(priceCost.value);
+};
+
+
+export {onPriceCostChange, sliderElement, priceCost};
 
 
