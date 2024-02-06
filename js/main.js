@@ -4,3 +4,4 @@ import {setUserFormSubmit} from './validate-form.js';
 
 getData();
 setUserFormSubmit(resetPage);
+

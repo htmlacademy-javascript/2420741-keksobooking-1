@@ -37,7 +37,6 @@ const getGuestsText = (guestCount) => {
 // нашли шаблон карочки
 const offerCardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-
 // создали функцию для списка удобств
 const actualFeatures = (features) => {
   const variableFeauters = document.createDocumentFragment();
@@ -64,6 +63,7 @@ const actualPhotos = (photos) => {
   });
   return variablePhotos;
 };
+
 
 const renderOfferCards = ({
   author,
