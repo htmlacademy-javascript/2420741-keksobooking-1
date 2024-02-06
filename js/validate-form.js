@@ -121,7 +121,7 @@ const setUserFormSubmit = (onSuccess) => {
     const isValid = pristine.validate();
     if (isValid) {
       const offerData = new FormData(evt.target);
-      fetch('https://28.javascript.pages.academy/keksobooking',
+      fetch('https://28.javascript.htmlacademy.pro/keksobooking',
         {
           method: 'POST',
           body: offerData,

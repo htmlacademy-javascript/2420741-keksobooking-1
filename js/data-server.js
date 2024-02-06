@@ -1,10 +1,14 @@
 import {createMarker} from './map.js';
 import {disableFilters} from './active.js';
+import {debounce} from './util.js';
+import {checkAllFilters, changeFilters} from './filters.js';
 
 
-const QUANTITY_OBJECTS = 15;
+const QUANTITY_OBJECTS = 30;
+// Задержка отображения маркеров на карте
+const TIMEOUT = 500;
 
-const BASE_URL = 'https://28.javascript.pages.academy/keksobooking';
+const BASE_URL = 'https://28.javascript.htmlacademy.pro/keksobooking';
 const Route = {
   GET_DATA: '/data',
   SEND_DATA: '/',
@@ -20,9 +24,10 @@ const getData = () => fetch(
     return response.json();
   })
   .then((offers) => {
-    const OFFERS_DATA = offers.slice(0, QUANTITY_OBJECTS);
+    const OFFERS_DATA = offers.slice().slice(0, QUANTITY_OBJECTS);
     OFFERS_DATA.forEach((offer) => {
       createMarker(offer);
+      changeFilters(debounce(() => checkAllFilters(offers), TIMEOUT));
     });
   })
   .catch (() => {
@@ -31,4 +36,3 @@ const getData = () => fetch(
 
 
 export {getData};
-

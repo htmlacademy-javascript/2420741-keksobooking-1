@@ -86,7 +86,6 @@ const createMarker = (offer) => {
 };
 
 // // Очистим слой меток объявлений
-// eslint-disable-next-line no-unused-vars
 const clearMarker = () => markerGroup.clearLayers();
 
 // переводим страницу в в дефолтное состояние
@@ -106,4 +105,4 @@ clearButton.onclick = () => {
 };
 
 
-export {createMarker, map, resetPage};
+export {createMarker, clearMarker, resetPage};
