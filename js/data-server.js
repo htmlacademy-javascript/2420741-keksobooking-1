@@ -4,7 +4,7 @@ import {debounce} from './util.js';
 import {checkAllFilters, changeFilters} from './filters.js';
 
 
-const QUANTITY_OBJECTS = 30;
+const QUANTITY_OBJECTS = 10;
 // Задержка отображения маркеров на карте
 const TIMEOUT = 500;
 
