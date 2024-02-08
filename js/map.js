@@ -2,6 +2,7 @@ import {renderOfferCards} from './popup.js';
 import {onPriceCostChange} from './validate-form.js';
 import {getForm, activeForm} from './active.js';
 import {sliderElement, priceCost} from './validate-form.js';
+import {previewAvatar, previewPhotosBlock} from './photos.js';
 
 //инициируем карту
 const map = L.map('map-canvas')
@@ -88,6 +89,9 @@ const createMarker = (offer) => {
 // // Очистим слой меток объявлений
 const clearMarker = () => markerGroup.clearLayers();
 
+
+const DEFAUT_AVATAR = 'img/muffin-grey.svg';
+
 // переводим страницу в в дефолтное состояние
 const resetPage = () => {
   marker.setLatLng(TOKIO);
@@ -96,6 +100,8 @@ const resetPage = () => {
   ADDRESS.value = `${TOKIO.lat.toFixed(5)}, ${TOKIO.lng.toFixed(5)}`;
   onPriceCostChange();
   sliderElement.noUiSlider.set(priceCost.value);
+  previewAvatar.src = DEFAUT_AVATAR;
+  previewPhotosBlock.innerHTML = '';
 };
 
 const clearButton = document.querySelector('.ad-form__reset');
