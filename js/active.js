@@ -1,3 +1,5 @@
+import {resetPage} from './map.js';
+
 // находим форму заполнения
 const getForm = document.querySelector('.ad-form');
 // находим содержимое формы
@@ -40,6 +42,14 @@ const activeFilters = () => {
   }
 
 };
+
+// выведим форму в дефолтное стостояние
+const resetForm = document.querySelector('.ad-form__reset');
+
+resetForm.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetPage();
+});
 
 
 export{getForm, disableFilters, activeForm, activeFilters};
